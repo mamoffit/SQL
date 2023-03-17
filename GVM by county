@@ -1,0 +1,26 @@
+SELECT
+
+d.countyname
+,h.e2022gvm
+, p.race
+, p.gender
+, case when p.age <= 18 then '< 18'
+    when p.age > 18 and p.age <= 24 then '18-24'
+    when p.age > 24 and p.age <= 34 then '25-34'
+    when p.age > 34 and p.age <= 49 then '35-49'
+    when p.age > 49 and p.age <= 64 then '49-64'
+    when p.age > 64 then '65+'
+    end as age
+,COUNT (p.dwid)
+
+FROM sv_va.catalist_person_02 p
+
+LEFT JOIN sv_va.catalist_vote_history_02 h
+ON p.dwid = h.dwid AND h.state = p.state
+
+LEFT JOIN sv_va.catalist_district_02 d
+ON p.dwid = d.dwid AND p.state = d.state
+
+WHERE h.e2022gvm IS NOT NULL
+
+GROUP BY 1, 2,3,4,5
