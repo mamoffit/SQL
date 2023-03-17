@@ -1,0 +1,7 @@
+SELECT
+    h.e2018gvm
+    ,COUNT (p.dwid)
+FROM sv_va.catalist_person_02 p
+LEFT JOIN sv_va.catalist_vote_history_02 h ON p.dwid = h.dwid AND h.state = 'VA' AND p.state = 'VA'
+WHERE h.e2018gvm <> 'NULL'
+GROUP BY h.e2018gvm;
